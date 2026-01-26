@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction Companies List</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Bootstrap CSS (optional for additional components) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJqGQ6K4jH3k8CBgT78b00gU6kkwF3GQ9nR1l9a58qEje8wYhgOrkvHloJlD" crossorigin="anonymous">
+     <!-- Custom Styling -->
+     <style>
+        /* Custom Styles */
+        body {
+            background-color: #f3f4f6;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin-top: 2rem;
+        }
+
+        .constructor-card {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .constructor-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card-header {
+            background-color: #4c51bf;
+            color: white;
+            padding: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            font-size: 1.5rem;
+        }
+
+        .card-body {
+            padding: 20px;
+            background-color: #ffffff;
+        }
+
+        .card-body p {
+            font-size: 0.9rem;
+            color: #333;
+            margin: 5px 0;
+        }
+
+        .card-body a {
+            color: #4c51bf;
+            text-decoration: none;
+        }
+
+        .card-body a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 640px) {
+            .constructor-card {
+                margin-bottom: 1.5rem;
+            }
+        }
+    </style>
+
+</head>
+<body class="bg-gray-100">
+
+    <!-- Container for Constructors List -->
+    <div class="container py-10">
+
+        <!-- Page Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800">Construction Companies List</h1>
+        </div>
+
+        <!-- Grid of Constructors -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {% for constructor in con %}
+                <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
+                    <!-- Constructor Card -->
+                    <div class="p-6">
+                        <h2 class="text-2xl font-semibold text-indigo-600">{{ constructor.name }}</h2>
+                        <p class="text-gray-700 mt-2">License No: <strong>{{ constructor.license_no }}</strong></p>
+                        <p class="text-gray-600 mt-2">{{ constructor.address }}</p>
+                        <p class="text-gray-600 mt-2">Phone: {{ constructor.phone_no }}</p>
+                        <p class="text-gray-600 mt-2">Email: <a href="mailto:{{ constructor.email }}" class="text-indigo-600">{{ constructor.email }}</a></p>
+                        {% if constructor.website %}
+                            <p class="text-gray-600 mt-2">Website: <a href="{{ constructor.website }}" target="_blank" class="text-indigo-600">{{ constructor.website }}</a></p>
+                        {% endif %}
+                        <p class="text-gray-500 mt-2">Established: {{ constructor.established_date }}</p>
+                        
+                        <!-- Contact Now Button -->
+                        <div class="mt-4 flex space-x-4">
+                            <!-- Contact Now Button -->
+                            <a href="//wa.me/{{ constructor.phone_no }}" class="inline-block px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 text-center">Contact Now</a>
+                            
+                            <!-- View Projects Button -->
+                            <a href="{% url 'view_projects' constructor.id %}" class="inline-block px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 text-center">View Projects</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            
+                <!-- Back to Home Button -->
+             
+        </div>
+        <div class="text-center mb-4">
+            <a href="/home/" class="back-home-btn">Back to Home</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (optional for modals, etc.) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybR2Jwz48pV0y6tvJ4+pn9t0F1L7e1TyX5zm3bFzd5UhzF0g2" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-cp5ckhU4vJ4n6ISF22VEO2c1Pcbp+0CpH5Kkv6FZy+z1vwHYh1hMz5l+pT5+dBlJ" crossorigin="anonymous"></script>
+
+</body>
+</html>

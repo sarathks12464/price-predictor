@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Designer Profile</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9fafc;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #34495e;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="file"] {
+            border: none;
+            background-color: #f9fafc;
+            padding: 10px;
+        }
+
+        .btn-submit {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 12px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #45a049;
+        }
+
+        .btn-back {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #3498db;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+            margin-right: 15px;
+        }
+
+        .btn-back:hover {
+            background-color: #2980b9;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 14px;
+            color: #888;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .btn-submit, .btn-back {
+                padding: 10px 25px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Edit Your Profile</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" value="{{ designer.name }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="text" id="phone" name="phone" value="{{ designer.phone }}">
+            </div>
+
+            <div class="form-group">
+                <label for="date_of_birth">Date of Birth:</label>
+                <input type="date" id="date_of_birth" name="date_of_birth" value="{{ designer.date_of_birth|date:'Y-m-d' }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" value="{{ designer.location }}">
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender">
+                    <option value="Male" {% if designer.gender == 'Male' %}selected{% endif %}>Male</option>
+                    <option value="Female" {% if designer.gender == 'Female' %}selected{% endif %}>Female</option>
+                    <option value="Other" {% if designer.gender == 'Other' %}selected{% endif %}>Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="company_name">Company Name:</label>
+                <input type="text" id="company_name" name="company_name" value="{{ designer.company_name }}">
+            </div>
+
+            <div class="form-group">
+                <label for="company_address">Company Address:</label>
+                <textarea id="company_address" name="company_address">{{ designer.company_address }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="profession">Profession:</label>
+                <select id="profession" name="profession">
+                    <option value="Interior" {% if designer.profession == 'Interior' %}selected{% endif %}>Interior Design</option>
+                    <option value="Exterior" {% if designer.profession == 'Exterior' %}selected{% endif %}>Exterior Design</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="years_of_experience">Years of Experience:</label>
+                <input type="number" id="years_of_experience" name="years_of_experience" value="{{ designer.years_of_experience }}">
+            </div>
+
+            <div class="form-group">
+                <label for="certifications">Certifications:</label>
+                <textarea id="certifications" name="certifications">{{ designer.certifications }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="skills">Skills:</label>
+                <textarea id="skills" name="skills">{{ designer.skills }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" value="{{ designer.password }}">
+            </div>
+
+            <div class="form-group">
+                <label for="website">Website:</label>
+                <input type="text" id="website" name="website" value="{{ designer.website }}">
+            </div>
+
+            <div class="form-group">
+                <label for="profile_picture">Profile Picture:</label>
+                <input type="file" id="profile_picture" name="profile_picture">
+            </div>
+
+            <button type="submit" class="btn-submit">Update Profile</button>
+        </form>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="{% url 'designer_profile' %}" class="btn-back">Back to Profile</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Designer Platform</p>
+    </footer>
+
+</body>
+
+</html>

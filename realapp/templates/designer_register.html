@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Designer Registration</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            color: #34495e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            min-height: 100vh;
+            padding: 0 20px;
+            overflow: auto;
+        }
+
+        h2 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .form-container label {
+            font-size: 14px;
+            color: #34495e;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form-container input,
+        .form-container select,
+        .form-container textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #34495e;
+        }
+
+        .form-container input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        .form-container button {
+            background-color: #2ecc71;
+            color: #fff;
+            font-size: 16px;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .form-container button:hover {
+            background-color: #27ae60;
+        }
+
+        .form-container p {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .form-container a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .form-container a:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: -15px;
+            margin-bottom: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 20px;
+            }
+
+            .form-container input,
+            .form-container select,
+            .form-container button {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Register as a Designer</h2>
+        <form id="designer-register-form" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+            {% csrf_token %}
+
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br>
+
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" name="phone" pattern="^\d{10}$" title="Phone number must be 10 digits" required><br>
+
+            <label for="date_of_birth">Date of Birth:</label>
+            <input type="date" id="date_of_birth" name="date_of_birth" required><br>
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required><br>
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select><br>
+
+            <label for="company_name">Company Name:</label>
+            <input type="text" id="company_name" name="company_name" required><br>
+
+            <label for="company_address">Company Address:</label>
+            <textarea id="company_address" name="company_address" required></textarea><br>
+
+            <label for="profession">Profession:</label>
+            <select id="profession" name="profession" required>
+                <option value="Interior">Interior Design</option>
+                <option value="Exterior">Exterior Design</option>
+            </select><br>
+
+            <label for="years_of_experience">Years of Experience:</label>
+            <input type="number" id="years_of_experience" name="years_of_experience" min="1" required><br>
+
+            <label for="certifications">Certifications:</label>
+            <textarea id="certifications" name="certifications" required></textarea><br>
+
+            <label for="skills">Skills:</label>
+            <textarea id="skills" name="skills"></textarea><br>
+
+            <label for="profile_picture">Profile Picture:</label>
+            <input type="file" id="profile_picture" name="profile_picture" required><br>
+
+            <label for="website">Website URL:</label>
+            <input type="url" id="website" name="website"><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" minlength="8" required><br>
+
+            <label for="confirm_password">Confirm Password:</label>
+            <input type="password" id="confirm_password" name="confirm_password" required><br>
+
+            <button type="submit">Register</button>
+
+            <p>Already have an account? <a href="/designer_login/">Login</a></p>
+        </form>
+
+        <div id="error-messages" class="error"></div>
+    </div>
+
+    <script>
+        // Frontend form validation
+        function validateForm() {
+            let formValid = true;
+            const errorMessages = [];
+
+            // Clear previous error messages
+            document.getElementById("error-messages").innerHTML = "";
+
+            // 1. Validate Email format
+            const email = document.getElementById("email").value;
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailPattern.test(email)) {
+                errorMessages.push("Invalid email format.");
+                formValid = false;
+            }
+
+            // 2. Validate Phone number (must be 10 digits)
+            const phone = document.getElementById("phone").value;
+            const phonePattern = /^\d{10}$/;
+            if (!phonePattern.test(phone)) {
+                errorMessages.push("Phone number must be 10 digits.");
+                formValid = false;
+            }
+
+            // 3. Validate Password length
+            const password = document.getElementById("password").value;
+            if (password.length < 8) {
+                errorMessages.push("Password must be at least 8 characters.");
+                formValid = false;
+            }
+
+            // 4. Check if Confirm Password matches
+            const confirmPassword = document.getElementById("confirm_password").value;
+            if (password !== confirmPassword) {
+                errorMessages.push("Passwords do not match.");
+                formValid = false;
+            }
+
+            // 5. Validate Years of Experience (should be a positive number)
+            const yearsOfExperience = document.getElementById("years_of_experience").value;
+            if (yearsOfExperience <= 0) {
+                errorMessages.push("Years of experience must be a positive number.");
+                formValid = false;
+            }
+
+            // 6. Check if age is at least 21 years
+            const dateOfBirth = document.getElementById("date_of_birth").value;
+            const dob = new Date(dateOfBirth);
+            const age = calculateAge(dob);
+            if (age < 21) {
+                errorMessages.push("You must be at least 21 years old to register.");
+                formValid = false;
+            }
+
+            // Show error messages
+            if (!formValid) {
+                let errorHTML = "<ul>";
+                errorMessages.forEach(message => {
+                    errorHTML += `<li>${message}</li>`;
+                });
+                errorHTML += "</ul>";
+                document.getElementById("error-messages").innerHTML = errorHTML;
+            }
+
+            return formValid;
+        }
+
+        // Helper function to calculate age based on Date of Birth
+        function calculateAge(dob) {
+            const today = new Date();
+            let age = today.getFullYear() - dob.getFullYear();
+            const month = today.getMonth();
+            if (month < dob.getMonth() || (month === dob.getMonth() && today.getDate() < dob.getDate())) {
+                age--;
+            }
+            return age;
+        }
+    </script>
+
+</body>
+</html>

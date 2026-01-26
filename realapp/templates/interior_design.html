@@ -1,0 +1,138 @@
+<!-- templates/interior_design.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interior Design Image Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const submitButton = form.querySelector('button[type="submit"]');
+            const errorDiv = document.getElementById('error-message');
+            const imageContainer = document.getElementById('image-container');
+            
+            submitButton.disabled = true;
+            submitButton.innerHTML = 'Generating...';
+            errorDiv.innerHTML = '';
+            
+            fetch('{% url "generate_image" %}', {
+                method: 'POST',
+                body: new FormData(form)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    errorDiv.innerHTML = `<div class="p-4 bg-red-50 text-red-600 rounded-lg">${data.error}</div>`;
+                } else {
+                    imageContainer.innerHTML = `
+                        <div class="relative">
+                            <a href="${data.image_url}">${data.image_url}</a>"
+                            <img src="${data.image_url}" alt="Generated interior design" class="w-full rounded-lg shadow-lg">
+                            <button onclick="downloadImage('${data.image_url}')" 
+                                    class="absolute top-4 right-4 bg-white/90 hover:bg-white p-2 rounded-lg shadow">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" 
+                                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                </svg>
+                            </button>
+                        </div>`;
+                }
+            })
+            .catch(error => {
+                errorDiv.innerHTML = `<div class="p-4 bg-red-50 text-red-600 rounded-lg">An error occurred while generating the image</div>`;
+            })
+            .finally(() => {
+                submitButton.disabled = false;
+                submitButton.innerHTML = 'Generate Image';
+            });
+        }
+
+        function clearForm() {
+            document.getElementById('prompt-input').value = '';
+            document.getElementById('image-container').innerHTML = '';
+            document.getElementById('error-message').innerHTML = '';
+        }
+
+        function downloadImage(imageUrl) {
+            const link = document.createElement('a');
+            link.href = imageUrl;
+            link.download = 'interior-design.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function setSuggestion(text) {
+            document.getElementById('prompt-input').value = text;
+        }
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen p-4">
+    <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6">
+        <a class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-900 text-white-900" href="/home/">Back to home</a>
+        <h1 class="text-2xl font-bold text-center mb-6">Interior Design Image Generator</h1>
+        
+        <form onsubmit="handleSubmit(event)" class="space-y-6">
+            {% csrf_token %}
+            <div class="space-y-2">
+                <textarea
+                    id="prompt-input"
+                    name="prompt"
+                    placeholder="Describe your interior design idea..."
+                    class="w-full h-32 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    required
+                ></textarea>
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+                {% for suggestion in suggestions %}
+                    <button
+                        type="button"
+                        onclick="setSuggestion('{{ suggestion }}')"
+                        class="px-3 py-1 text-sm bg-gray-100 rounded-full hover:bg-gray-200 transition-colors"
+                    >
+                        {{ suggestion }}
+                    </button>
+                {% endfor %}
+            </div>
+
+            <div class="flex gap-4">
+                <button 
+                    type="submit"
+                    class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" 
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                    Generate Image
+                </button>
+                
+                <button 
+                    type="button"
+                    onclick="clearForm()"
+                    class="px-4 py-2 border rounded-lg hover:bg-gray-50"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" 
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 6h18"/>
+                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+                    </svg>
+                </button>
+            </div>
+        </form>
+
+        <div id="error-message" class="mt-4"></div>
+        <div id="image-container" class="mt-6"></div>
+    </div>
+</body>
+</html>

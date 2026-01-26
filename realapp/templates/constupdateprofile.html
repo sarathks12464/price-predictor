@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Construction Company Profile</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Bootstrap CSS (optional for additional components) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJqGQ6K4jH3k8CBgT78b00gU6kkwF3GQ9nR1l9a58qEje8wYhgOrkvHloJlD" crossorigin="anonymous">
+</head>
+<body class="bg-gradient-to-r from-indigo-400 via-blue-400 to-purple-500">
+
+    <div class="container mx-auto px-4 py-10">
+
+        <!-- Profile Update Card -->
+        <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-xl shadow-indigo-300">
+            <!-- Profile Header -->
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-extrabold text-gray-800">Update Construction Company Profile</h2>
+                <p class="text-lg text-gray-500 mt-2">Edit your company details below</p>
+            </div>
+
+            <!-- Profile Update Form -->
+            <form method="POST">
+                {% csrf_token %}
+                
+                <!-- Company Name -->
+                <div class="mb-6">
+                    <label for="name" class="block text-sm font-semibold text-gray-800 mb-2">Company Name</label>
+                    <input type="text" id="name" name="name" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-500 transition duration-200 ease-in-out" value="{{ user.name }}" required>
+                </div>
+
+                <!-- Address -->
+                <div class="mb-6">
+                    <label for="address" class="block text-sm font-semibold text-gray-800 mb-2">Address</label>
+                    <input type="text" id="address" name="address" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-500 transition duration-200 ease-in-out" value="{{ user.address }}" required>
+                </div>
+
+                <!-- Phone Number -->
+                <div class="mb-6">
+                    <label for="phone_no" class="block text-sm font-semibold text-gray-800 mb-2">Phone Number</label>
+                    <input type="text" id="phone_no" name="phone_no" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-500 transition duration-200 ease-in-out" value="{{ user.phone_no }}" required>
+                </div>
+
+                <!-- Email -->
+                <div class="mb-6">
+                    <label for="email" class="block text-sm font-semibold text-gray-800 mb-2">Email</label>
+                    <input type="email" id="email" name="email" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-500 transition duration-200 ease-in-out" value="{{ user.email }}" required>
+                </div>
+
+                <!-- Website -->
+                <div class="mb-6">
+                    <label for="website" class="block text-sm font-semibold text-gray-800 mb-2">Website</label>
+                    <input type="text" id="website" name="website" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-500 transition duration-200 ease-in-out" value="{{ user.website }}" required>
+                </div>
+
+                <!-- Established Date -->
+                <div class="mb-6">
+                    <label for="established_date" class="block text-sm font-semibold text-gray-800 mb-2">Established Date</label>
+                    <input type="date" id="established_date" name="established_date"  class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-500 transition duration-200 ease-in-out" value="{{ user.established_date|date:'Y-m-d' }}" required>
+                </div>
+
+                <!-- License Number -->
+                <div class="mb-6">
+                    <label for="license_no" class="block text-sm font-semibold text-gray-800 mb-2">License Number</label>
+                    <input type="text" id="license_no" name="license_no" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-500 transition duration-200 ease-in-out" value="{{ user.license_no }}" required>
+                </div>
+
+                <!-- Password -->
+                <div class="mb-6">
+                    <label for="password" class="block text-sm font-semibold text-gray-800 mb-2">Password</label>
+                    <input type="password" id="password" name="password" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-500 transition duration-200 ease-in-out"value="{{ user.password }}" required>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="mb-4">
+                    <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-3 rounded-lg shadow-md hover:bg-indigo-700 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-300">
+                        Update Profile
+                    </button>
+                </div>
+            </form>
+
+            <!-- Back to Profile Link -->
+            <div class="text-center">
+                <a href="/constprofile" class="text-indigo-600 hover:underline">Back to Profile</a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Bootstrap JS (optional for modals, etc.) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybR2Jwz48pV0y6tvJ4+pn9t0F1L7e1TyX5zm3bFzd5UhzF0g2" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-cp5ckhU4vJ4n6ISF22VEO2c1Pcbp+0CpH5Kkv6FZy+z1vwHYh1hMz5l+pT5+dBlJ" crossorigin="anonymous"></script>
+
+</body>
+</html>

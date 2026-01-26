@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ designer.name }}'s Designs</title>
+    <!-- Link to Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .design-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 15px;
+        }
+        .design-card img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            max-height: 200px;
+            margin-bottom: 10px;
+        }
+        .design-card-body {
+            text-align: center;
+        }
+        .btn-download {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">{{ designer.name }}'s Designs</h2>
+
+    <div class="row">
+        {% for design in designs %}
+            <div class="col-md-4">
+                <div class="design-card">
+                    <!-- Design Image Preview -->
+                    {% if design.image_preview %}
+                        <img src="{{ design.image_preview.url }}" alt="{{ design.title }}">
+                    {% else %}
+                        <img src="https://via.placeholder.com/300x200" alt="No Preview Available">
+                    {% endif %}
+                    
+                    <div class="design-card-body">
+                        <h5>{{ design.title }}</h5>
+                        <p><strong>Description:</strong> {{ design.description|default:"No description available" }}</p>
+                        
+                        {% if design.cost %}
+                            <p><strong>Cost:</strong> ${{ design.cost }}</p>
+                        {% endif %}
+
+                        <!-- Design File Download Link -->
+                        {% if design.design_file %}
+                            <a href="{{ design.design_file.url }}" class="btn btn-primary btn-download" download>Download Design File</a>
+                        {% else %}
+                            <button class="btn btn-secondary" disabled>No file available</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>No designs found for this designer.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Link to Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

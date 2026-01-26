@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Designer Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7fc;
+        }
+
+        .container {
+            width: 70%;
+            margin: 80px 150px;
+            padding: 80px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #f0f0f0;
+            margin-bottom: 40px;
+        }
+
+        header h2 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        header p {
+            font-size: 20px;
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .button {
+            padding: 18px 35px;
+            font-size: 22px;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+            transform: translateY(-6px);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+        }
+
+        .button.logout {
+            background-color: #f44336;
+        }
+
+        .button.logout:hover {
+            background-color: #e53935;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            font-size: 16px;
+            color: #888;
+        }
+
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                width: 85%;
+                padding: 30px;
+            }
+
+            header h2 {
+                font-size: 30px;
+            }
+
+            header p {
+                font-size: 18px;
+            }
+
+            .button-container {
+                flex-direction: column;
+                gap: 25px;
+            }
+
+            .button {
+                font-size: 20px;
+                padding: 15px 30px;
+            }
+
+            footer {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h2>Welcome, {{ designer.name }}!</h2>
+            <p>You're logged in to your designer dashboard. What would you like to do today?</p>
+        </header>
+
+        <div class="button-container">
+            <!-- Profile Button -->
+            <a href="/designer_profile/" class="button">View Profile</a>
+
+            <!-- Upload Designs Button -->
+            <a href="/upload_design/" class="button">Upload Your Designs</a>
+
+            <!-- Logout Button -->
+            <a href="{% url 'designer_logout' %}" class="button logout">Logout</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Designer Platform | <a href="#">Terms of Service</a> | <a href="#">Privacy Policy</a></p>
+    </footer>
+</body>
+
+</html>

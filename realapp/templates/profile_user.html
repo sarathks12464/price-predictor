@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&family=Poppins:wght@600;700&family=Raleway:wght@700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">User Profile</h1>
+        {% if prf.exists %}
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in prf %}
+                            <tr>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.phone }}</td>
+
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% else %}
+            <div class="alert alert-warning text-center" role="alert">
+                No user profile found.
+            </div>
+        {% endif %}
+        <div class="text-center mt-4">
+            <a href="/home/" class="btn btn-danger">Home</a>
+        </div>
+        <div class="text-center mt-4">
+            <a href="/update_profile/" class="btn btn-warning">Update Profile</a>
+        </div>
+        
+    </div>
+</body>
+</html>
+
+  
+

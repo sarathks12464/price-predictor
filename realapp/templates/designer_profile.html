@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Designer Profile</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+            color: #2c3e50;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #34495e;
+            font-weight: 600;
+        }
+
+        /* Profile Information */
+        .profile-info {
+            margin-bottom: 40px;
+            text-align: left;
+            padding: 0 30px;
+        }
+
+        .profile-info p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 12px;
+        }
+
+        .profile-info .label {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .profile-info a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .profile-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* Profile Picture */
+        .profile-picture {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 4px solid #ddd;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Buttons (Edit Profile, Back Button) */
+        .btn-edit, .btn-back {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            text-align: center;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-edit {
+            background-color: #4CAF50;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .btn-edit:hover {
+            background-color: #45a049;
+            transform: translateY(-3px);
+        }
+
+        .btn-edit:active {
+            transform: translateY(1px);
+        }
+
+        .btn-back {
+            background-color: #3498db;
+            color: #fff;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+
+        .btn-back:hover {
+            background-color: #2980b9;
+            transform: translateY(-3px);
+        }
+
+        .btn-back:active {
+            transform: translateY(1px);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 28px;
+            }
+
+            .profile-info p {
+                font-size: 16px;
+            }
+
+            .btn-edit, .btn-back {
+                padding: 10px 25px;
+                font-size: 16px;
+            }
+
+            .profile-info {
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<center>
+    <div class="container">
+        <h2>Your Profile</h2>
+        <div class="profile-info">
+            <div style="text-align: center;">
+                <img src="{{ designer.profile_picture.url }}" alt="Profile Picture" class="profile-picture">
+            </div>
+            <p><span class="label">Name:</span> {{ designer.name }}</p>
+            <p><span class="label">Email:</span> {{ designer.email }}</p>
+            <p><span class="label">Phone:</span> {{ designer.phone }}</p>
+            <p><span class="label">Date of Birth:</span> {{ designer.date_of_birth }}</p>
+            <p><span class="label">Location:</span> {{ designer.location }}</p>
+            <p><span class="label">Gender:</span> {{ designer.gender }}</p>
+            <p><span class="label">Company Name:</span> {{ designer.company_name }}</p>
+            <p><span class="label">Profession:</span> {{ designer.profession }}</p>
+            <p><span class="label">Years of Experience:</span> {{ designer.years_of_experience }}</p>
+            <p><span class="label">Website:</span> 
+                {% if designer.website %}
+                    <a href="{{ designer.website }}" target="_blank">{{ designer.website }}</a>
+                {% else %}
+                    Not Available
+                {% endif %}
+            </p>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="{% url 'designer_editprofile' %}" class="btn-edit">Edit Profile</a>
+            <a href="{% url 'designer_dashboard' %}" class="btn-back">Back to Dashboard</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Designer Platform</p>
+    </footer>
+</center>
+</body>
+
+</html>

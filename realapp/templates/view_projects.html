@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects of {{ constructor.name }}</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJqGQ6K4jH3k8CBgT78b00gU6kkwF3GQ9nR1l9a58qEje8wYhgOrkvHloJlD" crossorigin="anonymous">
+    
+    <!-- Custom Styles -->
+    <style>
+        body {
+            background-color: #f9fafb;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .project-card {
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            width: 100%; /* Allow cards to fill the width of their container */
+            margin: 0 auto; /* Center cards within the column */
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .project-header {
+            background-color: #4c51bf;
+            color: white;
+            padding: 10px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            font-size: 1rem;
+            text-align: center;
+            height: 60px;
+        }
+
+        .project-body {
+            padding: 12px;
+            background-color: #fff;
+            height: calc(100% - 80px);
+            overflow-y: auto;
+        }
+
+        .project-description {
+            font-size: 0.9rem;
+            color: #333;
+            margin-bottom: 8px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .project-cost,
+        .project-duration {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        /* Make sure the card is not aligned in the center, but starts from the left */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+
+        /* Styling for Back to Home button */
+        .back-home-btn {
+            background-color: #4c51bf;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-home-btn:hover {
+            background-color: #2b3b92;
+        }
+
+        /* Styling for title */
+        h1 {
+            font-weight: bold;
+            color: #4b5563; /* Grey color */
+        }
+    </style>
+</head>
+<body>
+
+    
+
+        <!-- Page Header -->
+        <div class="text-center mb-4">
+            <h1 class="font-bold text-gray-600">Projects of {{ constructor.name }}</h1>
+        </div>
+
+        <!-- Grid of Projects -->
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+            {% for project in projects %}
+                <div class="col">
+                    <div class="project-card shadow-lg">
+                        <!-- Project Card -->
+                        <div class="project-header text-white">
+                            <h2 class="font-bold">{{ project.project_description }}</h2>
+                        </div>
+                        <div class="project-body">
+                            <img src="{{ project.project_image.url }}" alt="Project Image" class="project-image mb-4">
+                            <p class="project-description">{{ project.project_description }}</p>
+                            <p class="project-cost"><strong>Cost:</strong> ${{ project.project_cost }}</p>
+                            <p class="project-duration"><strong>Duration:</strong> {{ project.project_duration }} months</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="container py-5">
+            <!-- Back to Home Button -->
+            <div class="text-center mb-4">
+                <a href="/home/" class="back-home-btn">Back to Home</a>
+            </div>
+    </div>
+
+    <!-- Bootstrap JS (optional for modals, etc.) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybR2Jwz48pV0y6tvJ4+pn9t0F1L7e1TyX5zm3bFzd5UhzF0g2" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-cp5ckhU4vJ4n6ISF22VEO2c1Pcbp+0CpH5Kkv6FZy+z1vwHYh1hMz5l+pT5+dBlJ" crossorigin="anonymous"></script>
+
+</body>
+</html>

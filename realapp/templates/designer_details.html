@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Designers</title>
+    <!-- Link to Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .designer-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .designer-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .designer-card-body {
+            padding: 15px;
+        }
+        .designer-card-body h5 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .designer-card-body p {
+            color: #777;
+        }
+        .btn {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">Designers</h2>
+
+    <div class="row">
+        {% for designer in designer %}
+            <div class="col-md-4">
+                <div class="designer-card">
+                    {% if designer.profile_picture %}
+                        <img src="{{ designer.profile_picture.url }}" alt="{{ designer.name }}">
+                    {% else %}
+                        <img src="https://via.placeholder.com/300x200" alt="Default Image">
+                    {% endif %}
+                    
+                    <div class="designer-card-body">
+                        <h5>{{ designer.name }}</h5>
+                        <p><strong>Profession:</strong> {{ designer.profession }}</p>
+                        <p><strong>Years of Experience:</strong> {{ designer.years_of_experience }}</p>
+
+                        <div class="d-flex">
+                            <!-- WhatsApp Button -->
+                            {% if designer.phone %}
+                                <a href="https://wa.me/{{ designer.phone }}" class="btn btn-success" target="_blank">Contact (WhatsApp)</a>
+                            {% else %}
+                                <button class="btn btn-secondary" disabled>Phone Not Available</button>
+                            {% endif %}
+                            
+                            <!-- View Designs Button -->
+                            <a href="/view_designs/{{ designer.id }}" class="btn btn-primary">View Designs</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+<!-- Link to Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
